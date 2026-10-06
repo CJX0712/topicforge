@@ -88,6 +88,24 @@ topicforge/
 标签置换不变性由 Hungarian 算法保证（详见 `topicforge/core/assign.py`，纯 Python O(n³) 增广路，
 与 `scipy.linear_sum_assignment` 交叉验证）。
 
+## 踩坑与失败案例（真实缺陷，均已修复并留回归）
+
+| # | 症状 | 根因 | 修法 |
+|---|------|------|------|
+| 1 | 批量向量化吉布斯采样 LDA recovery 恒 0.44~0.46（4000 次迭代仍 0.50） | 批量并行采样是**坏的 MCMC kernel**，跨样本平均又受标签置换退化 | 改用 VB-LDA，recovery 跃升至 0.80+ |
+| 2 | `ModuleNotFoundError: No module named 'topicforge'` | 源码用绝对导入 `topicforge.core`，但包模块直接放在仓库根、未建成子包 | 核心模块移入 `topicforge/` 子包并加 `__init__.py`；CLI/demo 的 `sys.path` 插入层数同步修正 |
+| 3 | `em_polish_phi` 报 `TypeError: NoneType not subscriptable` | 精炼初值只传了 `phi*V`，`gamma` 为 `None` | 补充完整 `gamma0 = alpha + rng.random((D,K))` 初值 |
+| 4 | `np.add.at` 累加在大规模语料上成为性能瓶颈 | 稀疏逐元素原子加开销大 | 改用 `np.bincount` 加权累加（`idx_wk` 展平索引） |
+| 5 | 单链 LDA 多次运行 recovery 方差大、跨样本平均退化 | 主题标签置换导致平均相互抵消 | TopicFuse 引入 Hungarian 共识对齐（见消融实验） |
+
+## 消融实验
+
+```bash
+python examples/ablation.py
+```
+
+拆解 TopicFuse 两大组件（Hungarian 共识对齐 / VB 精炼）的独立贡献，对照单链 LDA 与无对齐平均。
+
 ## 开发
 
 ```bash
