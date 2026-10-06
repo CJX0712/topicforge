@@ -1,0 +1,60 @@
+{
+  "meta": {
+    "seed": 12345,
+    "n_topics": 6,
+    "vocab_size": 500,
+    "n_docs": 200,
+    "avg_doc_len": 50,
+    "alpha": 0.1,
+    "eta": 0.01,
+    "n_chains": 4,
+    "n_iter": 150,
+    "burnin": 60,
+    "holdout_frac": 0.2
+  },
+  "n_datasets": 3,
+  "results": {
+    "topicfuse": {
+      "perplexity": 62.02737335718948,
+      "recovery_mean": 0.9237289891039803,
+      "recovery_std": 0.046140149574885964,
+      "clustering_mean": 0.79,
+      "clustering_std": 0.058878405775518984
+    },
+    "lda": {
+      "perplexity": 77.12847375762419,
+      "recovery_mean": 0.82353799673272,
+      "recovery_std": 0.03945144235935955,
+      "clustering_mean": 0.7416666666666667,
+      "clustering_std": 0.01929306150465039
+    },
+    "nmf": {
+      "perplexity": 49.15844803115932,
+      "recovery_mean": 0.9905934337024674,
+      "recovery_std": 0.0008097124393287269,
+      "clustering_mean": 0.9049999999999999,
+      "clustering_std": 0.041432676315520174
+    },
+    "tfidf_kmeans": {
+      "perplexity": null,
+      "recovery_mean": 0.8205824166295305,
+      "recovery_std": 0.008946579369278347,
+      "clustering_mean": 0.7666666666666666,
+      "clustering_std": 0.02718251071716684
+    },
+    "random": {
+      "perplexity": null,
+      "recovery_mean": 0.09934717498890151,
+      "recovery_std": 0.03794336576027215,
+      "clustering_mean": 0.235,
+      "clustering_std": 0.01224744871391589
+    }
+  },
+  "headline": {
+    "flagship": "topicfuse",
+    "strong_baseline": "lda",
+    "recovery_delta_mean": 0.1002,
+    "recovery_threshold": 0.02,
+    "pass": true
+  }
+}

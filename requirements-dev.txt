@@ -1,0 +1,4 @@
+# 开发与 CI 依赖（独立于运行时，运行时仅需 numpy）
+pytest>=7
+ruff==0.16.10
+scikit-learn

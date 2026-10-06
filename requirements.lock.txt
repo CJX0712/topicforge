@@ -1,0 +1,5 @@
+# 锁定版本（本地托管 venv 实测可用，CI 复现锚点）
+numpy==2.5.3
+pytest==9.1.1
+ruff==0.16.10
+scikit-learn==1.9.1
